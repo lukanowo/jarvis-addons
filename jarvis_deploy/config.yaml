@@ -1,5 +1,5 @@
 name: Jarvis Deploy
-version: "0.1.5"
+version: "0.1.6"
 slug: jarvis_deploy
 description: Sicherer lokaler Deployment-Dienst für freigegebene Jarvis-Integrationen
 url: https://github.com/lukanowo/jarvis-home-assistant
@@ -13,6 +13,7 @@ startup: services
 boot: auto
 watchdog: "http://[HOST]:[PORT:8099]/health"
 ingress: true
+ingress_stream: true
 ingress_port: 8099
 panel_icon: mdi:package-variant-closed
 panel_title: Jarvis Deploy

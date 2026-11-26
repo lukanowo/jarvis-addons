@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.6
+
+- Migrationsupload über Home-Assistant-Ingress streamt jetzt (`ingress_stream: true`); die 16-MiB-Grenze des Ingress-Proxys wird dadurch umgangen.
+- Eigenes Upload-Limit von 256 MiB für Migrationsarchive; normale API-Anfragen bleiben auf 16 MiB begrenzt.
+- Das innere App-Archiv wird direkt aus dem äußeren Supervisor-Backup gestreamt und nicht vollständig in den Arbeitsspeicher geladen.
+- Nicht benötigte Bestandteile wie `image.tar` und `supervisor.tar.gz` werden weder extrahiert noch in `/data` abgelegt.
+- Staging- und Upload-Temporärdateien werden nach Erfolg, Fehler und abgebrochener Verbindung entfernt; beim Start werden Reste eines früheren Prozesses aufgeräumt.
+- Produktive Dateien werden erst nach bestandener Vorprüfung verändert.
+- Tar-Bomben-, Pfad-, Symlink- und Größenprüfungen bleiben erhalten; Testkanal-Sperren bleiben vollständig aktiv.
+- Das native Add-on liefert das bestehende `apparmor.txt` wieder mit; dadurch wird das restriktive Profil `jarvis_deploy` statt `docker-default` geladen.
+- Automatisierte Tests decken synthetische Backups über 50 MiB, Abbrüche, Größenüberschreitungen und beschädigte Archive ab.
+
 ## 0.1.5
 
 - Schreibgeschütztes Konfigurationsinventar für Skripte, Automatisierungen, Assist-Freigaben und OpenAI-Conversation-Agenten.
