@@ -1,10 +1,10 @@
 {
   "channel": "test",
-  "commit": "5e05a67e72496c2badb7d4b4317009d98bcff939",
-  "created_at": "2026-11-26T08:50:19+00:00",
-  "digest": "sha256:f327dce1d320e9efe778dba0ecf3e70a6f134ab48fee6617d6ed90d338351fb2",
+  "commit": "eb06dc99297c149e114d362a0803142b43096480",
+  "created_at": "2026-11-26T14:25:54+00:00",
+  "digest": "sha256:ccf61c21f91ea4807a8d1bfc389dd20c75f6eb86c359d54870a1fbcaff0f22ac",
   "image": "ghcr.io/lukanowo/jarvis-deploy-test",
   "schema_version": 1,
-  "version": "0.1.5",
-  "workflow_run": "45781105930"
+  "version": "0.1.6",
+  "workflow_run": "45838212375"
 }

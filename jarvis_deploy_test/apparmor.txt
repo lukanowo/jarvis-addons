@@ -1,0 +1,103 @@
+#include <tunables/global>
+
+profile jarvis_deploy flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/ssl_certs>
+
+  # Der Container läuft als root, um /config/custom_components schreiben zu können.
+  # Die Dateiregeln darunter begrenzen den Schreibzugriff auf die freigegebene
+  # Integration und das private /data-Verzeichnis.
+  capability,
+  network inet stream,
+  network inet6 stream,
+  network inet dgram,
+  network inet6 dgram,
+  network unix stream,
+  network unix dgram,
+  signal (send,receive) set=(kill,term,int,hup,cont),
+
+  # Eigener Programmcode und Python-Laufzeit.
+  # Der Eintrag für /app/ selbst ist zwingend: /app/** deckt nur Einträge
+  # unterhalb von /app ab, nicht das Verzeichnis /app/. Ohne diese Regel
+  # kann Python /app nicht auflisten und meldet für das vorhandene Paket
+  # fälschlich "No module named 'jarvis_deploy_app'".
+  /app/ rix,
+  /app/**/ rix,
+  /app/** rix,
+  /usr/local/lib/ r,
+  /usr/local/lib/python*/ r,
+  /usr/local/bin/python* ix,
+  /usr/bin/env ix,
+  /bin/bash ix,
+  /usr/bin/bash ix,
+  /bin/sh ix,
+  /usr/bin/sh ix,
+  /usr/local/lib/** mr,
+  /usr/local/lib/python*/** r,
+  /usr/lib/** mr,
+  /usr/lib/python*/** r,
+  /lib/** mr,
+  /lib64/** mr,
+
+  # Laufzeitdateien
+  /etc/ssl/certs/** r,
+  /etc/resolv.conf r,
+  /etc/hosts r,
+  /etc/nsswitch.conf r,
+  /etc/passwd r,
+  /etc/group r,
+  /proc/** r,
+  /dev/urandom r,
+  /dev/random r,
+  /dev/null rw,
+  /dev/zero r,
+  /tmp/ rwix,
+  /tmp/**/ rwix,
+  /tmp/** rw,
+
+  # Privater, persistenter Add-on-Speicher
+  /data/ rwix,
+  /data/**/ rwix,
+  /data/** rw,
+  # flock() auf der Deployment-Lockdatei benötigt zusätzlich das
+  # AppArmor-Recht "k" (lock). Ohne diese Regel schlägt bereits der
+  # nicht-blockierende exklusive Lock mit PermissionError fehl.
+  /data/deploy.lock rwk,
+
+  # Ausschließlich die freigegebene Integration und das Deployment-Staging
+  /config/ rix,
+  /config/custom_components/ rwix,
+  /config/custom_components/**/ rwix,
+  # Die Schreibprobe legt eine temporäre Datei direkt im Zielverzeichnis an.
+  /config/custom_components/.jarvis_deploy_probe_* rw,
+  /config/custom_components/jarvis_memory/ rwix,
+  /config/custom_components/jarvis_memory/** rw,
+  # Python legt __pycache__ in der laufenden Integration an. Die Verzeichnisse
+  # dürfen aufgeräumt werden; die .pyc-Dateien selbst bleiben per deny
+  # unlesbar und werden weder gesichert noch wiederhergestellt.
+  /config/custom_components/**/__pycache__/ rwix,
+  /config/custom_components/.jarvis_deploy/ rwix,
+  /config/custom_components/.jarvis_deploy/** rw,
+  # Fallback-Wiederherstellung aus dem Backup nutzt ein temporäres
+  # Schwesterverzeichnis und ersetzt anschließend das Ziel atomar.
+  /config/custom_components/.jarvis_memory.restore-*/ rwix,
+  /config/custom_components/.jarvis_memory.restore-*/** rw,
+
+  # Erinnerungsdatei: Lesen immer, Schreiben nur für die atomare
+  # Wiederherstellung aus dem Backup (temporäre Datei + os.replace).
+  /config/jarvis_memory/ rwix,
+  /config/jarvis_memory/memories.json rw,
+  /config/jarvis_memory/.memories.* rw,
+  /config/configuration.yaml r,
+
+  # Explizite Schutzregeln (deny hat Vorrang vor allow)
+  deny /config/configuration.yaml w,
+  deny /config/.storage/** rw,
+  deny /config/secrets.yaml rw,
+  deny /config/*.db rw,
+  deny /config/*.sqlite rw,
+  deny /config/*.log rw,
+  deny /config/**/*.pyc rw,
+  deny /config/**/*.pyo rw,
+}

@@ -1,5 +1,5 @@
 name: Jarvis Deploy Test
-version: "0.1.5"
+version: "0.1.6"
 slug: jarvis_deploy_test
 description: Testkanal für Jarvis Deploy; produktive Deployments sind technisch gesperrt
 url: https://github.com/lukanowo/jarvis-home-assistant
@@ -13,6 +13,7 @@ startup: services
 boot: manual
 watchdog: "http://[HOST]:[PORT:8099]/health"
 ingress: true
+ingress_stream: true
 ingress_port: 8099
 panel_icon: mdi:package-variant-closed
 panel_title: Jarvis Deploy Test
