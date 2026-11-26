@@ -1,0 +1,10 @@
+{
+  "channel": "production",
+  "commit": "5e05a67e72496c2badb7d4b4317009d98bcff939",
+  "created_at": "2026-11-26T11:04:29+00:00",
+  "digest": "sha256:ca937fd4b937b7369338c45d65a6aa9cd20b40c8518e137d7dd46ebdc1d30a9f",
+  "image": "ghcr.io/lukanowo/jarvis-deploy",
+  "schema_version": 1,
+  "version": "0.1.5",
+  "workflow_run": "45806415394"
+}
