@@ -1,10 +1,10 @@
 {
   "channel": "production",
-  "commit": "eb06dc99297c149e114d362a0803142b43096480",
-  "created_at": "2026-11-26T15:11:06+00:00",
-  "digest": "sha256:4926ce391187ee1c675e7427a8edd95f37d9ab45cfb7417a2266f2b0b5b0604d",
+  "commit": "5b6c53e178180c60f72860410e462fd236a9c89c",
+  "created_at": "2026-11-27T08:39:16+00:00",
+  "digest": "sha256:4352b613617b8607d73ee9d375a6d36340eb984fbf59e9319cf6f4fe9a4fdff6",
   "image": "ghcr.io/lukanowo/jarvis-deploy",
   "schema_version": 1,
-  "version": "0.1.6",
-  "workflow_run": "45845680291"
+  "version": "0.1.7",
+  "workflow_run": "45966707294"
 }

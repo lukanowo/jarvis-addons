@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.7
+
+- Migration toleriert die von Supervisor 2026.11.0 erzeugten Wurzel-Verzeichniseinträge `.` und `./` im äußeren und inneren App-Archiv.
+- Die strikte Prüfung von Pfaden, absoluten Pfaden, `..`-Pfaden, Symlinks, Hardlinks, doppelten Einträgen und Größenlimits bleibt unverändert.
+- Wurzel-Verzeichniseinträge werden weiterhin auf das Eintragslimit angerechnet.
+- Eine vollständige synthetische Supervisor-Migration sowie ein Upload über 50 MiB werden getestet.
+- `ingress_stream: true` und das mitgelieferte AppArmor-Profil bleiben unverändert.
+
 ## 0.1.6
 
 - Migrationsupload über Home-Assistant-Ingress streamt jetzt (`ingress_stream: true`); die 16-MiB-Grenze des Ingress-Proxys wird dadurch umgangen.

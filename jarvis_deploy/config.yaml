@@ -1,5 +1,5 @@
 name: Jarvis Deploy
-version: "0.1.6"
+version: "0.1.7"
 slug: jarvis_deploy
 description: Sicherer lokaler Deployment-Dienst für freigegebene Jarvis-Integrationen
 url: https://github.com/lukanowo/jarvis-home-assistant
