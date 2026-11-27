@@ -1,5 +1,13 @@
 # Changelog – Testkanal
 
+## 0.1.7
+
+- Testimage übernimmt die Migrationstoleranz für Supervisor-Wurzel-Verzeichniseinträge `.` und `./`.
+- Vollständige synthetische Migrationen und Archive über 50 MiB werden geprüft.
+- Import produktiver Migrationsarchive, Schlüssel, Zustände und Backups bleibt im Testkanal vollständig deaktiviert.
+- Produktive Deployments, Rollbacks und Recovery bleiben technisch gesperrt.
+- `ingress_stream` und das AppArmor-Profil bleiben unverändert.
+
 ## 0.1.6
 
 - Testimage übernimmt den gestreamten Migrationsupload und das getrennte 256-MiB-Limit aus 0.1.6.
